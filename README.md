@@ -1,507 +1,539 @@
+<!-- Animated Header -->
 <p align="center">
-  <img src="docs/images/kelp_banner.svg" alt="KELP Banner" width="100%"/>
-</p>
-
-<h1 align="center">🌿 KELP - Automated Deal Flow Pipeline</h1>
-
-<p align="center">
-  <strong>Transform Company Data into Investor-Ready Teasers in Seconds</strong>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:22c55e,50:10b981,100:06b6d4&height=200&section=header&text=🌿%20KELP&fontSize=80&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Automated%20Deal%20Flow%20Pipeline&descSize=25&descAlignY=55&descAlign=50" width="100%"/>
 </p>
 
 <p align="center">
-  <a href="#-quick-start">Quick Start</a> •
-  <a href="#-architecture">Architecture</a> •
-  <a href="#-features">Features</a> •
-  <a href="#-tech-stack">Tech Stack</a> •
-  <a href="#-sample-outputs">Samples</a> •
-  <a href="#-contributing">Contributing</a>
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=1000&color=22C55E&center=true&vCenter=true&multiline=true&repeat=true&width=800&height=100&lines=Transform+Company+Data+into+Investor+Teasers;AI-Powered+%7C+GPU+Accelerated+%7C+100%25+Offline;Built+for+IIT+Bombay+Hackathon+2026+%F0%9F%8F%86" alt="Typing SVG" />
+</p>
+
+<!-- Animated Badges -->
+<p align="center">
+  <a href="#-quick-start"><img src="https://img.shields.io/badge/🚀_Quick_Start-22c55e?style=for-the-badge" alt="Quick Start"/></a>
+  <a href="#-architecture"><img src="https://img.shields.io/badge/🏗️_Architecture-3b82f6?style=for-the-badge" alt="Architecture"/></a>
+  <a href="#-features"><img src="https://img.shields.io/badge/✨_Features-8b5cf6?style=for-the-badge" alt="Features"/></a>
+  <a href="#-tech-stack"><img src="https://img.shields.io/badge/🛠️_Tech_Stack-f59e0b?style=for-the-badge" alt="Tech Stack"/></a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
-  <img src="https://img.shields.io/badge/Ollama-Local_LLM-purple?style=for-the-badge&logo=ollama&logoColor=white" alt="Ollama"/>
-  <img src="https://img.shields.io/badge/PyTorch-GPU_Accelerated-orange?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch"/>
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License"/>
+  <img src="https://img.shields.io/badge/Python-3.10+-3776ab?style=flat-square&logo=python&logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/Ollama-Local_LLM-7c3aed?style=flat-square&logo=ollama&logoColor=white" alt="Ollama"/>
+  <img src="https://img.shields.io/badge/PyTorch-GPU_Accelerated-ee4c2c?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch"/>
+  <img src="https://img.shields.io/badge/License-MIT-22c55e?style=flat-square" alt="License"/>
+  <img src="https://img.shields.io/github/stars/shubro18202758/KELP?style=flat-square&color=yellow" alt="Stars"/>
+  <img src="https://img.shields.io/github/last-commit/shubro18202758/KELP?style=flat-square&color=blue" alt="Last Commit"/>
 </p>
 
+---
+
+## 🎬 Demo
+
 <p align="center">
-  <img src="https://img.shields.io/github/stars/shubro18202758/KELP?style=social" alt="Stars"/>
-  <img src="https://img.shields.io/github/forks/shubro18202758/KELP?style=social" alt="Forks"/>
-  <img src="https://img.shields.io/github/issues/shubro18202758/KELP?style=flat-square" alt="Issues"/>
+  <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="700">
 </p>
+
+<table align="center">
+<tr>
+<td align="center" width="50%">
+
+### 📥 Input
+```
+📄 Company Markdown Files
+├── Financial Reports
+├── Business Description  
+└── Product Information
+```
+
+</td>
+<td align="center" width="50%">
+
+### 📤 Output
+```
+📊 Investment Teaser PPT
+├── Cover Slide
+├── Business Overview
+├── Financial Charts
+└── Investment Highlights
+```
+
+</td>
+</tr>
+</table>
 
 ---
 
 ## 🎯 What is KELP?
 
-**KELP** (Knowledge-Enhanced Lean Presentations) is an AI-powered pipeline that automatically generates professional **Investment Teaser PowerPoint presentations** from raw company data. Built for the **IIT Bombay Hackathon 2026**, KELP transforms markdown documents into stunning, investor-grade presentations with:
+<img align="right" src="https://user-images.githubusercontent.com/74038190/212257467-871d32b7-e401-42e8-a166-fcfd7baa4c6b.gif" width="200">
 
-- 📊 **Dynamic Financial Charts** (Donut, Area, Column, Gauge charts)
-- 🔍 **Real-time Web Research** with source citations
-- 🖼️ **Sector-specific Images** auto-fetched from the web
-- 🤖 **Local LLM Processing** (100% offline, privacy-first)
-- 📈 **Market Intelligence** with TAM, CAGR, and industry trends
+**KELP** (Knowledge-Enhanced Lean Presentations) is an AI-powered pipeline that automatically generates professional **Investment Teaser PowerPoint presentations** from raw company data.
 
-<p align="center">
-  <img src="docs/images/kelp_workflow.png" alt="KELP Workflow" width="90%"/>
-</p>
+### ✨ Key Capabilities
+
+| Feature | Description |
+|:-------:|-------------|
+| 📊 | **Dynamic Charts** - Donut, Area, Column, Gauge |
+| 🔍 | **Web Research** - Real-time market intelligence |
+| 🖼️ | **Smart Images** - Sector-specific auto-fetch |
+| 🤖 | **Local LLM** - 100% offline, privacy-first |
+| 📈 | **Market Data** - TAM, CAGR, Industry trends |
 
 ---
 
 ## 🏗️ Architecture
 
-KELP follows a **modular, microservices-inspired architecture** where each component handles a specific task in the teaser generation pipeline:
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" width="400">
+</p>
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           KELP ARCHITECTURE                                  │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐                   │
-│  │   📄 INPUT    │    │  🔄 PROCESS  │    │   📊 OUTPUT  │                   │
-│  │  (Markdown)  │───▶│   (AI/ML)    │───▶│    (PPTX)    │                   │
-│  └──────────────┘    └──────────────┘    └──────────────┘                   │
-│                                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐    │
-│  │                        PROCESSING LAYERS                             │    │
-│  ├─────────────────────────────────────────────────────────────────────┤    │
-│  │                                                                      │    │
-│  │  Layer 1: DATA INGESTION          Layer 2: SECTOR INTELLIGENCE      │    │
-│  │  ├─ Markdown Parser               ├─ Industry Classifier            │    │
-│  │  ├─ Financial Extractor           ├─ Sub-sector Detection           │    │
-│  │  └─ Entity Recognition            └─ Confidence Scoring             │    │
-│  │                                                                      │    │
-│  │  Layer 3: CONTENT GENERATION      Layer 4: WEB RESEARCH             │    │
-│  │  ├─ LLM Investment Writer         ├─ DuckDuckGo Search              │    │
-│  │  ├─ Narrative Generator           ├─ Webpage Content Fetch          │    │
-│  │  └─ Highlight Extractor           └─ LLM Synthesis & Citation       │    │
-│  │                                                                      │    │
-│  │  Layer 5: IMAGE INTELLIGENCE      Layer 6: PRESENTATION             │    │
-│  │  ├─ Sector Image Fetcher          ├─ 4-Quadrant Layouts             │    │
-│  │  ├─ Web Scraping Engine           ├─ Multi-Chart Generation         │    │
-│  │  └─ Image Cache Manager           └─ Professional PPTX Export       │    │
-│  │                                                                      │    │
-│  └─────────────────────────────────────────────────────────────────────┘    │
-│                                                                              │
-└─────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph INPUT["📄 INPUT"]
+        A[Company Data<br/>Markdown/PDF]
+    end
+    
+    subgraph PROCESS["🔄 AI PROCESSING"]
+        B[🔍 Data Ingestion]
+        C[🏷️ Sector Classification]
+        D[💰 Financial Extraction]
+        E[🌐 Web Research]
+        F[🤖 LLM Generation]
+        G[🖼️ Image Fetching]
+    end
+    
+    subgraph OUTPUT["📊 OUTPUT"]
+        H[Investment Teaser<br/>PPTX]
+    end
+    
+    A --> B --> C --> D --> E --> F --> G --> H
+    
+    style INPUT fill:#1e3a5f,stroke:#3b82f6,color:#fff
+    style PROCESS fill:#1e2d3d,stroke:#22c55e,color:#fff
+    style OUTPUT fill:#1e3a2f,stroke:#22c55e,color:#fff
 ```
 
-### 📁 Project Structure
+### 🔄 Pipeline Flow
+
+```mermaid
+graph TB
+    subgraph Layer1["Layer 1: Data Ingestion"]
+        A1[📄 Markdown Parser]
+        A2[📊 Financial Extractor]
+        A3[🏢 Entity Recognition]
+    end
+    
+    subgraph Layer2["Layer 2: Intelligence"]
+        B1[🏷️ Sector Classifier]
+        B2[🌐 Web Research Engine]
+        B3[📈 Market Intelligence]
+    end
+    
+    subgraph Layer3["Layer 3: Content"]
+        C1[🤖 LLM Generator]
+        C2[📝 Narrative Writer]
+        C3[🎯 Highlight Extractor]
+    end
+    
+    subgraph Layer4["Layer 4: Presentation"]
+        D1[📊 Chart Generator]
+        D2[🖼️ Image Sourcer]
+        D3[🎨 PPTX Assembler]
+    end
+    
+    Layer1 --> Layer2 --> Layer3 --> Layer4
+    
+    style Layer1 fill:#3b82f6,stroke:#60a5fa,color:#fff
+    style Layer2 fill:#8b5cf6,stroke:#a78bfa,color:#fff
+    style Layer3 fill:#f59e0b,stroke:#fbbf24,color:#fff
+    style Layer4 fill:#22c55e,stroke:#4ade80,color:#fff
+```
+
+---
+
+## 📁 Project Structure
+
+<img align="right" src="https://user-images.githubusercontent.com/74038190/212257454-16e3712e-945a-4ca2-b238-408ad0bf87e6.gif" width="150">
 
 ```
-KELP/
+🌿 KELP/
 │
-├── 📂 src/                          # Core source modules
-│   ├── 📂 data_ingestion/           # Markdown parsing & data extraction
-│   │   └── markdown_parser.py       # Parse company markdown files
-│   │
-│   ├── 📂 sector_intelligence/      # Industry classification
-│   │   └── classifier.py            # ML-based sector detection
-│   │
-│   ├── 📂 content_generation/       # AI content creation
-│   │   ├── advanced_research_engine.py    # 🌐 Gemini-style web research
-│   │   ├── investment_content_generator.py # 📝 LLM narrative generation
-│   │   ├── data_enrichment_engine.py      # 📊 Financial data extraction
-│   │   ├── llm_generator.py               # 🤖 Ollama LLM interface
-│   │   └── web_research_engine.py         # 🔍 Market intelligence
-│   │
-│   ├── 📂 image_intelligence/       # Image sourcing
-│   │   ├── free_image_fetcher.py    # 🖼️ DuckDuckGo image scraper
-│   │   └── image_sourcer.py         # Multi-source image manager
-│   │
-│   ├── 📂 presentation/             # PPTX generation
-│   │   ├── enhanced_kelp_generator.py     # 🎨 Main PPT generator
-│   │   ├── kelp_professional_generator.py # Professional layouts
-│   │   └── rich_ppt_generator.py          # Rich text handling
-│   │
-│   ├── 📂 citation/                 # Source attribution
-│   │   └── citation_generator.py    # 📚 Auto-generate citations
-│   │
-│   ├── 📂 web_scraping/             # Web data collection
-│   │   ├── scraper.py               # Async web scraper
-│   │   └── web_search.py            # Search engine integration
-│   │
-│   └── 📂 vision/                   # Visual AI (experimental)
-│       ├── janus_engine.py          # DeepSeek Janus integration
-│       └── vl_engine.py             # Vision-language models
+├── 📂 src/
+│   ├── 📂 data_ingestion/        # Parse & extract
+│   ├── 📂 sector_intelligence/   # ML classification
+│   ├── 📂 content_generation/    # LLM narratives
+│   ├── 📂 image_intelligence/    # Image sourcing
+│   ├── 📂 presentation/          # PPTX generation
+│   ├── 📂 citation/              # Source attribution
+│   ├── 📂 web_scraping/          # Web data
+│   └── 📂 vision/                # Visual AI
 │
-├── 📂 config/                       # Configuration
-│   └── settings.py                  # Global settings & paths
+├── 📂 Company Data/              # 6 sample companies
+├── 📂 config/                    # Settings
+├── 📂 docs/                      # Documentation
 │
-├── 📂 Company Data/                 # Input data (6 sample companies)
-│   ├── automotive-kalyani-forge/    # 🏭 Manufacturing sector
-│   ├── electronics-centum/          # 🔌 Electronics & Defense
-│   ├── entertainment-connplex/      # 🎬 Entertainment & Media
-│   ├── logistics-gati/              # 🚚 Logistics & Supply Chain
-│   ├── pharma-ind-swift/            # 💊 Pharmaceuticals
-│   └── technology-ksolves/          # 💻 Technology & IT Services
-│
-├── 📂 docs/                         # Documentation & assets
-│   └── images/                      # README images & diagrams
-│
-├── 🐍 pipeline_v5_enhanced.py       # Main entry point
-├── 📋 requirements.txt              # Python dependencies
-├── 📖 README.md                     # This file
-├── 📜 LICENSE                       # MIT License
-└── 🤝 CONTRIBUTING.md               # Contribution guidelines
+├── 🐍 pipeline_v5_enhanced.py    # Main entry
+├── 📋 requirements.txt           # Dependencies
+└── 📖 README.md                  # You are here!
 ```
 
 ---
 
 ## ✨ Features
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="100">
+</p>
+
 ### 🤖 AI-Powered Content Generation
 
-KELP uses **local LLMs** (via Ollama) to generate investor-grade narratives. No API keys, no cloud costs, complete privacy.
+<table>
+<tr>
+<td width="60%">
 
-| Feature | Description |
-|---------|-------------|
-| 📝 **Investment Narratives** | Professional business overviews, growth stories, expansion plans |
-| 🎯 **Highlight Extraction** | Auto-identify key investment highlights from raw data |
-| 📊 **Financial Analysis** | Extract revenue, EBITDA, margins from unstructured text |
-| 🏷️ **Sector Classification** | 100% accurate industry detection with sub-sector granularity |
+```python
+# What KELP does with your data:
+
+1. 🔍 Parse company markdown files
+2. 🏷️ Classify into 6 industry sectors
+3. 💰 Extract financial metrics (Revenue, EBITDA)
+4. 🌐 Research market size & CAGR online
+5. 🤖 Generate investor narratives via LLM
+6. 📊 Create dynamic charts automatically
+7. 🖼️ Fetch sector-relevant images
+8. 📑 Assemble professional PPTX
+```
+
+</td>
+<td width="40%" align="center">
+
+<img src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" width="200">
+
+</td>
+</tr>
+</table>
 
 ### 🌐 Gemini-Style Web Research
 
-Our **Advanced Research Engine** reads actual webpages (not just snippets) and synthesizes market intelligence:
-
-```python
-# What KELP does behind the scenes:
-1. 🔍 Generate smart search queries for the sector
-2. 📄 Fetch 20+ sources from DuckDuckGo
-3. 📖 Actually READ 5-8 full webpages
-4. 📊 Extract statistics, market sizes, CAGRs
-5. 🤖 LLM synthesizes insights with citations
-6. 📈 Add TAM/SAM badges to your slides
+```mermaid
+sequenceDiagram
+    participant K as KELP
+    participant D as DuckDuckGo
+    participant W as Webpages
+    participant L as Local LLM
+    
+    K->>D: 🔍 Search "Manufacturing India market size"
+    D-->>K: 📄 Return 20+ URLs
+    K->>W: 📖 Fetch & Read 5-8 pages
+    W-->>K: 📊 Raw content
+    K->>L: 🤖 Synthesize insights
+    L-->>K: ✅ Market: $768B, CAGR: 8.0%
 ```
 
-**Sample Research Output:**
-```
-📊 Research Results:
-  Market Size: $1.74 Trillion (2026) per Mordor Intelligence
-  CAGR: 7.26% (2026-2031) per Mordor Intelligence
-  Key Trends: 3 trends found
-    - Growing adoption of Industry 4.0 and smart manufacturing
-    - Rapid growth in electronics sector with 15.3% CAGR
-    - Asia Pacific leading with 42.7% market share
-  Sources: 5 sources cited
-```
+### 📊 Chart Types Generated
 
-### 📊 Dynamic Chart Generation
-
-KELP generates **8 different chart types** automatically:
-
-| Chart Type | Use Case |
-|------------|----------|
-| 🍩 **Donut Chart** | Revenue breakdown |
-| 📈 **Area Chart** | EBITDA trends |
-| 📊 **Column Chart** | YoY comparison |
-| 📉 **Combo Chart** | Revenue + Margin |
-| 🎯 **KPI Gauge** | Performance metrics |
-| 📶 **Stacked Bar** | Segment analysis |
-| 📈 **Line Chart** | Growth trajectory |
-| 🥧 **Pie Chart** | Market share |
-
-### 🖼️ Intelligent Image Sourcing
-
-KELP auto-fetches **sector-relevant images** using web scraping (no API keys):
-
-| Sector | Image Types |
-|--------|-------------|
-| 🏭 Manufacturing | Factory, assembly line, industrial equipment |
-| 💊 Pharmaceuticals | Laboratory, research, medicine production |
-| 💻 Technology | Server rooms, software interfaces, digital transformation |
-| 🎬 Entertainment | Cinema, media production, streaming services |
-| 🚚 Logistics | Warehouses, supply chain, transportation |
-| 🔌 Electronics | Circuit boards, defense systems, electronic components |
+<table>
+<tr>
+<td align="center">🍩<br/><b>Donut</b><br/><sub>Revenue Split</sub></td>
+<td align="center">📈<br/><b>Area</b><br/><sub>EBITDA Trend</sub></td>
+<td align="center">📊<br/><b>Column</b><br/><sub>YoY Growth</sub></td>
+<td align="center">📉<br/><b>Combo</b><br/><sub>Revenue+Margin</sub></td>
+</tr>
+<tr>
+<td align="center">🎯<br/><b>Gauge</b><br/><sub>KPI Metrics</sub></td>
+<td align="center">📶<br/><b>Stacked</b><br/><sub>Segments</sub></td>
+<td align="center">📈<br/><b>Line</b><br/><sub>Trajectory</sub></td>
+<td align="center">🥧<br/><b>Pie</b><br/><sub>Market Share</sub></td>
+</tr>
+</table>
 
 ---
 
 ## 🛠️ Tech Stack
 
-KELP is built on a modern, GPU-accelerated Python stack:
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212257472-08e52665-c503-4bd9-aa20-f5a4dae769b5.gif" width="100">
+</p>
 
-### 🧠 AI & Machine Learning
+<table align="center">
+<tr>
+<td align="center" width="96">
+<img src="https://techstack-generator.vercel.app/python-icon.svg" alt="Python" width="65" height="65" />
+<br>Python
+</td>
+<td align="center" width="96">
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg" width="65" height="65" />
+<br>PyTorch
+</td>
+<td align="center" width="96">
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg" width="65" height="65" />
+<br>Pandas
+</td>
+<td align="center" width="96">
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg" width="65" height="65" />
+<br>NumPy
+</td>
+<td align="center" width="96">
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/matplotlib/matplotlib-original.svg" width="65" height="65" />
+<br>Matplotlib
+</td>
+</tr>
+</table>
 
-| Technology | Purpose | Version |
-|------------|---------|---------|
-| **Python** | Core Language | 3.10+ |
-| **Ollama** | Local LLM Runtime | Latest |
-| **PyTorch** | GPU Acceleration | 2.1+ |
-| **Transformers** | Model Hub | 4.36+ |
-| **qwen2.5:7b** | Primary LLM | 7B params |
+### 🧠 AI & ML Stack
 
-### 📊 Data & Visualization
+| Component | Technology | Purpose |
+|:---------:|:----------:|---------|
+| 🤖 | **Ollama + qwen2.5:7b** | Local LLM inference |
+| 🔥 | **PyTorch 2.1+** | GPU acceleration |
+| 🤗 | **Transformers** | Model loading |
+| 🌐 | **ddgs** | Web search |
+| 🍲 | **BeautifulSoup** | HTML parsing |
 
-| Technology | Purpose | Version |
-|------------|---------|---------|
-| **python-pptx** | PPTX Generation | 0.6.21+ |
-| **Pandas** | Data Analysis | 2.0+ |
-| **Matplotlib** | Chart Rendering | 3.8+ |
-| **pdfplumber** | PDF Extraction | 0.9+ |
-| **Pillow** | Image Processing | 10.0+ |
+### 📊 Presentation Stack
 
-### 🌐 Web & Scraping
+| Component | Technology | Purpose |
+|:---------:|:----------:|---------|
+| 📑 | **python-pptx** | PPTX generation |
+| 📈 | **Matplotlib** | Chart rendering |
+| 🖼️ | **Pillow** | Image processing |
+| 📄 | **pdfplumber** | PDF extraction |
 
-| Technology | Purpose | Version |
-|------------|---------|---------|
-| **ddgs** | DuckDuckGo Search | Latest |
-| **BeautifulSoup4** | HTML Parsing | 4.12+ |
-| **aiohttp** | Async HTTP Client | 3.9+ |
-| **icrawler** | Image Fetching | Latest |
-| **requests** | HTTP Requests | 2.31+ |
-
-### 🔧 LLM Configuration
-
-KELP uses **qwen2.5:7b** via Ollama with optimized inference parameters:
+### ⚙️ LLM Configuration
 
 ```python
-# Optimized for investor-grade content
 GENERATION_CONFIG = {
     "model": "qwen2.5:7b",
-    "temperature": 0.4,      # Lower = more factual/consistent
-    "top_p": 0.85,           # Nucleus sampling threshold  
-    "repeat_penalty": 1.15,  # Reduce repetition
-    "num_ctx": 4096,         # Large context window
+    "temperature": 0.4,      # 🎯 Factual precision
+    "top_p": 0.85,           # 📊 Balanced diversity  
+    "repeat_penalty": 1.15,  # 🔄 Reduce repetition
+    "num_ctx": 4096,         # 📖 Large context
 }
 ```
-
-| Parameter | Value | Purpose |
-|-----------|-------|---------|
-| `temperature` | 0.4 | Factual precision over creativity |
-| `top_p` | 0.85 | Balanced token diversity |
-| `repeat_penalty` | 1.15 | Varied language without loops |
-| `num_ctx` | 4096 | Long document understanding |
 
 ---
 
 ## 🚀 Quick Start
 
-### Prerequisites
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212284136-03988914-d899-44b4-b1d9-4c9c4c41f31f.gif" width="400">
+</p>
 
-- **Python 3.10+**
-- **NVIDIA GPU** (recommended) or CPU
-- **[Ollama](https://ollama.ai/)** installed with `qwen2.5:7b`
-
-### Installation
+### 📋 Prerequisites
 
 ```bash
-# 1. Clone the repository
+✅ Python 3.10+
+✅ NVIDIA GPU (recommended) or CPU
+✅ Ollama installed
+```
+
+### 📦 Installation
+
+```bash
+# Clone the repository
 git clone https://github.com/shubro18202758/KELP.git
 cd KELP
 
-# 2. Create virtual environment
+# Create virtual environment
 python -m venv venv
+venv\Scripts\activate     # Windows
+source venv/bin/activate  # Linux/Mac
 
-# Windows
-venv\Scripts\activate
-
-# Linux/Mac
-source venv/bin/activate
-
-# 3. Install dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-# 4. Install Ollama model (one-time setup)
+# Install LLM model
 ollama pull qwen2.5:7b
 ```
 
-### Running KELP
+### ▶️ Running KELP
 
 ```bash
-# Process ALL companies (6 sample companies included)
+# Process ALL companies
 python pipeline_v5_enhanced.py
 
-# Process a SINGLE company
+# Process SINGLE company
 python pipeline_v5_enhanced.py --company kalyani
 
-# Process specific company
-python pipeline_v5_enhanced.py --company centum
-
-# Quiet mode (less output)
+# Quiet mode
 python pipeline_v5_enhanced.py --quiet
 ```
 
-### Expected Output
+### 📺 Expected Output
 
 ```
 ======================================================================
-PIPELINE V5 - ENHANCED DATA-DENSE LAYOUTS
+🌿 KELP PIPELINE V5 - ENHANCED DATA-DENSE LAYOUTS
 ======================================================================
-📂 Data: ./Company Data
-📂 Output: ./output/v5_enhanced
 
-📋 Found 6 companies to process
-
-============================================================
 📦 Processing: FORGE
-============================================================
-  → Loading company data...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   ✓ Loaded 42,404 characters
-  → Classifying sector...
-  ✓ Sector: Manufacturing & Industrials (confidence: 72%)
-  🚀 Extracting financial data with GPU...
+  ✓ Sector: Manufacturing & Industrials (72%)
   ✓ Revenue: ₹2366Cr, EBITDA: 10.1%
-  🔍 Deep researching: Manufacturing & Industrials
-  📄 Found 22 unique sources
-  📖 Successfully read 6 pages
-  ✓ Research: Market $768.28B, CAGR 8.0%, 3 trends
-  🚀 Generating investment content with GPU...
-  ✓ Investment-grade content generated
-  🖼️ Fetching sector images (FREE web scraping)...
-  ✓ Fetched 7 sector-appropriate images
-  📊 Creating Slide 1: Cover - Project Velocity
-  📊 Creating Slide 2: Business Overview (4-Quadrant)
-  📊 Creating Slide 3: Financial Deep-Dive (Multi-Chart)
-  📊 Creating Slide 4: Investment Highlights
-  📊 Creating Slide 5: Disclaimer
+  🔍 Found 22 sources, read 6 pages
+  ✓ Market: $768.28B, CAGR: 8.0%
+  ✓ Generated investment narratives
+  ✓ Fetched 7 sector images
+  📊 Created 5 slides with charts
 
 ✅ SUCCESS: Project Velocity
-   📊 PPT: Project_Velocity_Manufacturing_20260121.pptx
-   🖼️ Images: 7
+   📊 PPT: Project_Velocity_Manufacturing.pptx
    ⏱ Time: 54.0s
 ```
 
 ---
 
-## 📊 Sample Outputs
+## 📊 Sample Results
 
-KELP generates **professional, data-dense presentations** with multiple chart types:
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212284115-f47cd8ff-2ffb-4b04-b5bf-4d1c14c0247f.gif" width="400">
+</p>
 
-### 📑 Slide Structure
+### 🏆 Companies Processed
 
-| Slide | Content | Charts |
-|-------|---------|--------|
-| **1. Cover** | Project codename, sector badge, background image | - |
-| **2. Business Overview** | 4-quadrant layout: Description, Products, Clients, Positioning | - |
-| **3. Financial Deep-Dive** | Revenue, EBITDA trends, key metrics | Donut, Area, Column |
-| **4. Investment Highlights** | Key strengths, market opportunity, growth drivers | KPI badges |
-| **5. Disclaimer** | Standard investment teaser disclaimer | - |
+| Company | Sector | Revenue | EBITDA | Market | CAGR |
+|:--------|:-------|--------:|-------:|-------:|-----:|
+| 🏭 Kalyani Forge | Manufacturing | ₹2,366 Cr | 10.1% | $768B | 8.0% |
+| 🔌 Centum | Electronics | ₹11,554 Cr | 8.4% | $175B | 5.8% |
+| 🎬 Connplex | Entertainment | ₹960 Cr | 27.3% | - | 9.8% |
+| 🚚 Gati | Logistics | ₹15,100 Cr | 4.3% | $1.2B | 8.5% |
+| 💊 Ind Swift | Pharma | ₹5,022 Cr | 9.7% | $129B | 8.1% |
+| 💻 Ksolves | Technology | - | - | $166B | 13% |
 
-### 🏆 Sample Companies Processed
+### ⚡ Performance Metrics
 
-| Company | Sector | Revenue | EBITDA | Market Size | CAGR |
-|---------|--------|---------|--------|-------------|------|
-| Kalyani Forge | Manufacturing | ₹2,366 Cr | 10.1% | $768B | 8.0% |
-| Centum | Electronics & Defense | ₹11,554 Cr | 8.4% | $175B | 5.8% |
-| Connplex | Entertainment | ₹960 Cr | 27.3% | - | 9.8% |
-| Gati | Logistics | ₹15,100 Cr | 4.3% | $1.2B | 8.5% |
-| Ind Swift | Pharmaceuticals | ₹5,022 Cr | 9.7% | $129B | 8.09% |
-| Ksolves | Technology | - | - | $166B | 13% |
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    PERFORMANCE DASHBOARD                     │
+├─────────────────────────────────────────────────────────────┤
+│  ⏱️  Processing Time     │  ~55 seconds per company         │
+│  📄  Sources Found       │  20-25 per sector                │
+│  📖  Pages Read          │  5-8 per company                 │
+│  📊  Charts Generated    │  4-6 per presentation            │
+│  🖼️  Images Fetched      │  7 per presentation              │
+│  💾  VRAM Usage          │  ~4.4 GB (qwen2.5:7b)            │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 📈 Performance Benchmarks
+## 🎨 Slide Preview
 
-| Metric | Value |
-|--------|-------|
-| **Processing Time** | ~50-55 seconds per company |
-| **Web Pages Read** | 5-8 per company |
-| **Sources Found** | 20-25 per sector |
-| **Charts Generated** | 4-6 per presentation |
-| **Images Fetched** | 7 per presentation |
-| **LLM Model** | qwen2.5:7b (4.4GB VRAM) |
-
-### 💻 Hardware Tested
-
-| Component | Specification |
-|-----------|---------------|
-| **GPU** | NVIDIA RTX 4070 (8GB VRAM) |
-| **CPU** | Intel i9-14900HX |
-| **RAM** | 32GB DDR5 |
-| **Storage** | NVMe SSD |
+```
+┌────────────────────────────────────────────────────────┐
+│  SLIDE 1: COVER                                        │
+│  ┌──────────────────────────────────────────────────┐  │
+│  │     🏭                                           │  │
+│  │     PROJECT VELOCITY                             │  │
+│  │     Manufacturing & Industrials                  │  │
+│  │     ━━━━━━━━━━━━━━━━━━━━━━                      │  │
+│  │     Confidential Investment Teaser               │  │
+│  └──────────────────────────────────────────────────┘  │
+├────────────────────────────────────────────────────────┤
+│  SLIDE 2: BUSINESS OVERVIEW (4-Quadrant)              │
+│  ┌────────────────┬─────────────────────────────────┐  │
+│  │  Description   │   Key Products                  │  │
+│  ├────────────────┼─────────────────────────────────┤  │
+│  │  Clients       │   Market Position               │  │
+│  └────────────────┴─────────────────────────────────┘  │
+├────────────────────────────────────────────────────────┤
+│  SLIDE 3: FINANCIAL DEEP-DIVE                         │
+│  ┌──────────┬──────────┬────────────────────────────┐  │
+│  │  🍩      │  📈      │  Key Metrics               │  │
+│  │  Revenue │  EBITDA  │  • Revenue: ₹2,366 Cr      │  │
+│  │  Split   │  Trend   │  • EBITDA: 10.1%           │  │
+│  └──────────┴──────────┴────────────────────────────┘  │
+├────────────────────────────────────────────────────────┤
+│  SLIDE 4: INVESTMENT HIGHLIGHTS                        │
+│  ┌──────────────────────────────────────────────────┐  │
+│  │  ✅ Strong market position                       │  │
+│  │  ✅ Diversified client base                      │  │
+│  │  ✅ Consistent revenue growth                    │  │
+│  │  ✅ Expansion opportunities                      │  │
+│  └──────────────────────────────────────────────────┘  │
+└────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 🎨 Customization
+## 💻 Hardware Tested
 
-### Adding New Sectors
-
-Edit `src/sector_intelligence/classifier.py`:
-
-```python
-SECTORS = {
-    "your_new_sector": {
-        "keywords": ["keyword1", "keyword2"],
-        "sub_sectors": ["sub1", "sub2"],
-    }
-}
-```
-
-### Changing LLM Model
-
-Edit `src/content_generation/llm_generator.py`:
-
-```python
-MODEL = "llama3.1:8b"  # or any Ollama-supported model
-```
-
-### Modifying Slide Templates
-
-Edit `src/presentation/enhanced_kelp_generator.py`:
-
-```python
-# Customize colors, fonts, layouts
-KELP_COLORS = {
-    'primary': RGBColor(0, 82, 147),    # Navy blue
-    'accent': RGBColor(0, 150, 136),    # Teal
-    'highlight': RGBColor(255, 193, 7), # Amber
-}
-```
+<table align="center">
+<tr>
+<td align="center">🎮<br/><b>GPU</b><br/>RTX 4070<br/><sub>8GB VRAM</sub></td>
+<td align="center">🖥️<br/><b>CPU</b><br/>i9-14900HX<br/><sub>24 Cores</sub></td>
+<td align="center">💾<br/><b>RAM</b><br/>32GB<br/><sub>DDR5</sub></td>
+<td align="center">💿<br/><b>Storage</b><br/>NVMe<br/><sub>SSD</sub></td>
+</tr>
+</table>
 
 ---
 
 ## 🔮 Roadmap
 
-- [ ] 🌍 Multi-language support (Hindi, Chinese, Spanish)
-- [ ] 📱 Streamlit web interface
-- [ ] 🔗 API endpoint for integration
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212284094-e50ceae2-de86-4dd6-9c31-f47d6e9f8e47.gif" width="400">
+</p>
+
+- [ ] 🌍 Multi-language support
+- [ ] 📱 Streamlit web interface  
+- [ ] 🔗 REST API endpoint
 - [ ] 📊 More chart types (Waterfall, Sankey)
-- [ ] 🤖 Fine-tuned domain-specific LLM
-- [ ] 📈 Real-time stock data integration
+- [ ] 🤖 Fine-tuned domain LLM
+- [ ] 📈 Real-time stock integration
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212284145-bf2c01a8-c7e1-4e82-8f66-dfd6e8a6f95e.gif" width="400">
+</p>
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ```bash
-# Fork the repo, then:
+# Fork → Clone → Branch → Commit → Push → PR
 git checkout -b feature/amazing-feature
 git commit -m "Add amazing feature"
 git push origin feature/amazing-feature
-# Open a Pull Request
 ```
 
 ---
 
 ## 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** - see [LICENSE](LICENSE) for details.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **IIT Bombay Hackathon 2026** - For the amazing challenge
-- **Ollama** - For democratizing local LLM inference
-- **python-pptx** - For PowerPoint generation capabilities
-- **DuckDuckGo** - For privacy-respecting web search
-
----
-
-## 👥 Team
-
-Built with 💚 by **Team KELP** for the **IIT Bombay Hackathon 2026**
+<table align="center">
+<tr>
+<td align="center">🏆<br/><b>IIT Bombay</b><br/><sub>Hackathon 2026</sub></td>
+<td align="center">🦙<br/><b>Ollama</b><br/><sub>Local LLM</sub></td>
+<td align="center">📊<br/><b>python-pptx</b><br/><sub>PPTX Gen</sub></td>
+<td align="center">🦆<br/><b>DuckDuckGo</b><br/><sub>Web Search</sub></td>
+</tr>
+</table>
 
 ---
 
 <p align="center">
-  <strong>⭐ Star this repo if you find it useful! ⭐</strong>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:22c55e,50:10b981,100:06b6d4&height=120&section=footer&animation=fadeIn" width="100%"/>
 </p>
 
 <p align="center">
-  <a href="https://github.com/shubro18202758/KELP/issues">Report Bug</a> •
-  <a href="https://github.com/shubro18202758/KELP/issues">Request Feature</a>
+  <b>Built with 💚 by Team KELP for IIT Bombay Hackathon 2026</b>
+</p>
+
+<p align="center">
+  <a href="https://github.com/shubro18202758/KELP/stargazers">⭐ Star this repo</a> •
+  <a href="https://github.com/shubro18202758/KELP/issues">🐛 Report Bug</a> •
+  <a href="https://github.com/shubro18202758/KELP/issues">💡 Request Feature</a>
+</p>
+
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=shubro18202758&repo=KELP&label=Profile%20Views&color=22c55e&style=flat-square" alt="Profile Views"/>
 </p>
