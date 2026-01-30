@@ -2,7 +2,7 @@
 Investment-Grade Content Generator
 ===================================
 
-Uses Ollama LLM (GPU-accelerated) to generate M&A investment banker quality content.
+Uses Janus Pro 7B (GPU-accelerated) to generate M&A investment banker quality content.
 Transforms raw company data into professionally structured investment teaser content.
 
 Key Features:
@@ -63,34 +63,37 @@ class InvestmentContent:
 
 class InvestmentContentGenerator:
     """
-    Generates investment-grade content using local LLM.
+    Generates investment-grade content using Janus Pro 7B.
     
     Uses carefully crafted prompts to extract and structure
     M&A-quality content from raw company data.
     """
     
-    def __init__(self, ollama_base_url: str = "http://localhost:11434"):
-        self.base_url = ollama_base_url
-        self.model = "qwen2.5:7b"
+    def __init__(self):
+        # Lazy-load Janus to avoid circular imports
+        self._janus_engine = None
         self._available = None
+    
+    @property
+    def janus_engine(self):
+        """Lazy load Janus engine"""
+        if self._janus_engine is None:
+            from src.vision.janus_engine import get_janus_engine
+            self._janus_engine = get_janus_engine()
+        return self._janus_engine
         
     async def check_availability(self) -> bool:
-        """Check if Ollama is running"""
+        """Check if Janus Pro 7B is available"""
         if self._available is not None:
             return self._available
             
-        try:
-            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=5)) as session:
-                async with session.get(f"{self.base_url}/api/tags") as resp:
-                    self._available = resp.status == 200
-        except:
-            self._available = False
+        self._available = self.janus_engine.is_available()
         return self._available
     
     async def _generate(self, prompt: str, max_tokens: int = 2000, 
                         temperature: float = 0.4) -> str:
         """
-        Generate content using LLM with optimized parameters.
+        Generate content using Janus Pro 7B with optimized parameters.
         
         Lower temperature (0.3-0.5) produces more focused, factual content
         ideal for investment presentations where precision matters.
@@ -99,26 +102,10 @@ class InvestmentContentGenerator:
             return ""
             
         try:
-            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=120)) as session:
-                payload = {
-                    "model": self.model,
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {
-                        "temperature": temperature,  # Lower for factual precision
-                        "num_predict": max_tokens,
-                        "num_gpu": 99,  # Use all available GPU layers
-                        "top_p": 0.85,  # Slightly tighter for coherence
-                        "repeat_penalty": 1.15,  # Avoid repetition
-                        "num_ctx": 4096,  # Larger context window
-                    }
-                }
-                async with session.post(f"{self.base_url}/api/generate", json=payload) as resp:
-                    if resp.status == 200:
-                        data = await resp.json()
-                        return data.get("response", "")
+            result = self.janus_engine.generate_text(prompt, temperature=temperature, max_tokens=max_tokens)
+            return result
         except Exception as e:
-            print(f"  ⚠ LLM generation error: {e}")
+            print(f"  ⚠ Janus LLM generation error: {e}")
         return ""
     
     async def generate_business_overview(self, raw_data: str, sector: str) -> List[str]:
@@ -371,12 +358,20 @@ ANONYMIZED TEXT:"""
 
 class SmartWebResearchGuide:
     """
-    Uses LLM to guide web research for better data collection.
+    Uses Janus Pro 7B to guide web research for better data collection.
     """
     
-    def __init__(self, ollama_base_url: str = "http://localhost:11434"):
-        self.base_url = ollama_base_url
-        self.model = "qwen2.5:7b"
+    def __init__(self):
+        # Lazy-load Janus
+        self._janus_engine = None
+    
+    @property
+    def janus_engine(self):
+        """Lazy load Janus engine"""
+        if self._janus_engine is None:
+            from src.vision.janus_engine import get_janus_engine
+            self._janus_engine = get_janus_engine()
+        return self._janus_engine
     
     async def generate_search_queries(self, company_name: str, sector: str) -> List[str]:
         """
@@ -398,21 +393,12 @@ Return as JSON array of search query strings.
 OUTPUT:"""
 
         try:
-            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=30)) as session:
-                payload = {
-                    "model": self.model,
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {"temperature": 0.3, "num_predict": 400}
-                }
-                async with session.post(f"{self.base_url}/api/generate", json=payload) as resp:
-                    if resp.status == 200:
-                        data = await resp.json()
-                        response = data.get("response", "")
-                        
-                        json_match = re.search(r'\[.*\]', response, re.DOTALL)
-                        if json_match:
-                            return json.loads(json_match.group())[:5]
+            response = self.janus_engine.generate_text(prompt, temperature=0.3, max_tokens=400)
+            
+            if response:
+                json_match = re.search(r'\[.*\]', response, re.DOTALL)
+                if json_match:
+                    return json.loads(json_match.group())[:5]
         except:
             pass
         
@@ -446,21 +432,12 @@ Return as JSON array of fact strings (max 10 facts).
 OUTPUT:"""
 
         try:
-            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=30)) as session:
-                payload = {
-                    "model": self.model,
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {"temperature": 0.2, "num_predict": 600}
-                }
-                async with session.post(f"{self.base_url}/api/generate", json=payload) as resp:
-                    if resp.status == 200:
-                        data = await resp.json()
-                        response = data.get("response", "")
-                        
-                        json_match = re.search(r'\[.*\]', response, re.DOTALL)
-                        if json_match:
-                            return json.loads(json_match.group())[:10]
+            response = self.janus_engine.generate_text(prompt, temperature=0.2, max_tokens=600)
+            
+            if response:
+                json_match = re.search(r'\[.*\]', response, re.DOTALL)
+                if json_match:
+                    return json.loads(json_match.group())[:10]
         except:
             pass
         

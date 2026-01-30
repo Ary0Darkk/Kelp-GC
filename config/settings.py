@@ -135,14 +135,20 @@ SECTOR_CONFIGS: Dict[str, SectorConfig] = {
 
 
 @dataclass 
-class LLMConfig:
-    """LLM Configuration for Ollama"""
-    model_name: str = "qwen2.5:7b"  # Use qwen2.5 which is available
-    base_url: str = "http://localhost:11434"
+class JanusConfig:
+    """Janus Pro 7B Configuration for GPU-accelerated local LLM"""
+    model_name: str = "deepseek-ai/Janus-Pro-7B"
+    device: str = "cuda"  # Use GPU
+    torch_dtype: str = "bfloat16"  # Efficient precision
+    
+    # Generation settings
     temperature_factual: float = 0.3  # For data extraction
-    temperature_creative: float = 0.7  # For anonymization/rewriting
+    temperature_creative: float = 0.7  # For narratives/anonymization
     max_tokens: int = 2048
-    timeout: int = 120
+    
+    # GPU optimization
+    use_flash_attention: bool = True
+    offload_to_cpu: bool = False  # Enable if VRAM issues occur
 
 
 @dataclass
@@ -167,5 +173,9 @@ COMPANY_FOLDERS = {
 
 # Initialize default configs
 BRANDING = KelpBranding()
-LLM_CONFIG = LLMConfig()
+JANUS_CONFIG = JanusConfig()  # Janus Pro 7B GPU config
 IMAGE_CONFIG = ImageConfig()
+
+# Backward compatibility alias
+LLM_CONFIG = JANUS_CONFIG
+

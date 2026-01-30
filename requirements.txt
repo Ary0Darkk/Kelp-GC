@@ -1,5 +1,6 @@
-# Kelp Deal Flow Pipeline V3 - Requirements
+# Kelp Deal Flow Pipeline V5 - Requirements
 # ==========================================
+# Updated to use DeepSeek Janus Pro 7B for local GPU-accelerated LLM
 
 # Core PPT/Document Generation
 python-pptx>=0.6.21
@@ -15,20 +16,21 @@ requests>=2.31.0
 lxml>=4.9.0
 aiohttp>=3.9.0
 
-# LLM Integration (Anonymization - Blind Factor)
-ollama>=0.1.0
-langchain>=0.1.0
-langchain-community>=0.0.10
+# DeepSeek Janus Pro 7B (Local GPU LLM - Main AI Engine)
+# Install Janus separately: pip install git+https://github.com/deepseek-ai/Janus.git
+torch>=2.1.0
+transformers>=4.36.0
+accelerate>=0.25.0
+einops>=0.7.0
+timm>=0.9.0
+
+# GPU Optimization (REQUIRED for Janus)
+bitsandbytes>=0.41.0
+# flash-attn>=2.0.0  # Install separately: pip install flash-attn --no-build-isolation
 
 # Image Processing & Generation
 Pillow>=10.0.0
 matplotlib>=3.8.0
-
-# DeepSeek Janus-Pro (Visual Intelligence)
-# Install separately: pip install janus-pro
-torch>=2.1.0
-transformers>=4.36.0
-accelerate>=0.25.0
 
 # Charts & Visualization  
 plotly>=5.18.0
@@ -39,10 +41,6 @@ pyyaml>=6.0
 python-dotenv>=1.0.0
 tqdm>=4.66.0
 rich>=13.0.0
-
-# Optional: GPU Optimization
-# bitsandbytes>=0.41.0  # For 4-bit quantization
-# flash-attn>=2.0.0     # For Flash Attention 2
 
 # Optional: Better PDF extraction
 # pytesseract>=0.3.10

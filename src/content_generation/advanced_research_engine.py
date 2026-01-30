@@ -79,19 +79,19 @@ class MarketIntelligence:
 
 class AdvancedResearchEngine:
     """
-    Gemini-style web research engine.
+    Gemini-style web research engine using Janus Pro 7B.
     
     Key capabilities:
     1. Search multiple sources with smart query generation
     2. Fetch and parse actual webpage content
     3. Extract statistics, facts, and figures
-    4. LLM-powered synthesis and summarization
+    4. Janus Pro 7B-powered synthesis and summarization
     5. Source attribution and citation
     """
     
-    def __init__(self, ollama_url: str = "http://localhost:11434"):
-        self.ollama_url = ollama_url
-        self.model = "qwen2.5:7b"
+    def __init__(self):
+        # Lazy-load Janus
+        self._janus_engine = None
         self.session: Optional[aiohttp.ClientSession] = None
         
         # Request headers to avoid blocking
@@ -106,6 +106,14 @@ class AdvancedResearchEngine:
         # Rate limiting
         self._last_request_time = 0
         self._min_request_interval = 0.5  # seconds
+    
+    @property
+    def janus_engine(self):
+        """Lazy load Janus engine"""
+        if self._janus_engine is None:
+            from src.vision.janus_engine import get_janus_engine
+            self._janus_engine = get_janus_engine()
+        return self._janus_engine
         
     async def _get_session(self) -> aiohttp.ClientSession:
         """Get or create HTTP session"""
@@ -289,34 +297,12 @@ class AdvancedResearchEngine:
     
     async def _call_llm(self, prompt: str, max_tokens: int = 1500, 
                         temperature: float = 0.3) -> str:
-        """Call local LLM with optimized parameters for factual extraction"""
+        """Call Janus Pro 7B with optimized parameters for factual extraction"""
         try:
-            async with aiohttp.ClientSession(
-                timeout=aiohttp.ClientTimeout(total=90)
-            ) as session:
-                payload = {
-                    "model": self.model,
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {
-                        "temperature": temperature,  # Low for factual content
-                        "num_predict": max_tokens,
-                        "num_gpu": 99,
-                        "top_p": 0.9,
-                        "repeat_penalty": 1.15,
-                        "num_ctx": 4096,  # Larger context
-                    }
-                }
-                
-                async with session.post(
-                    f"{self.ollama_url}/api/generate", 
-                    json=payload
-                ) as resp:
-                    if resp.status == 200:
-                        data = await resp.json()
-                        return data.get("response", "").strip()
+            result = self.janus_engine.generate_text(prompt, temperature=temperature, max_tokens=max_tokens)
+            return result if result else ""
         except Exception as e:
-            print(f"  ⚠ LLM call error: {e}")
+            print(f"  ⚠ Janus LLM call error: {e}")
         
         return ""
     

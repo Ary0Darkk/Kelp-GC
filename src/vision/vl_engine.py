@@ -365,8 +365,8 @@ Format as JSON with keys: metrics, products, achievements, positioning, visual_d
         Used for unique anonymized descriptions, hooks, etc.
         """
         if not self._initialized:
-            # Fallback to Ollama
-            return self._ollama_generate(prompt, context)
+            # Fallback to Janus Pro 7B
+            return self._janus_generate(prompt, context)
         
         try:
             messages = [{"role": "user", "content": [{"type": "text", "text": prompt}]}]
@@ -399,30 +399,18 @@ Format as JSON with keys: metrics, products, achievements, positioning, visual_d
             return response
             
         except Exception as e:
-            print(f"VL generation error: {e}, falling back to Ollama")
-            return self._ollama_generate(prompt, context)
+            print(f"VL generation error: {e}, falling back to Janus")
+            return self._janus_generate(prompt, context)
     
-    def _ollama_generate(self, prompt: str, context: Dict = None) -> str:
-        """Fallback to Ollama for text generation"""
+    def _janus_generate(self, prompt: str, context: Dict = None) -> str:
+        """Fallback to Janus Pro 7B for text generation"""
         try:
-            import requests
-            response = requests.post(
-                "http://localhost:11434/api/generate",
-                json={
-                    "model": "qwen2.5:7b",
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {
-                        "temperature": 0.8,
-                        "num_predict": 1024
-                    }
-                },
-                timeout=120
-            )
-            if response.status_code == 200:
-                return response.json().get('response', '')
-        except:
-            pass
+            from src.vision.janus_engine import get_janus_engine
+            janus = get_janus_engine()
+            if janus.is_available():
+                return janus.generate_text(prompt, temperature=0.8, max_tokens=1024)
+        except Exception as e:
+            print(f"Janus fallback error: {e}")
         return ""
     
     def cleanup(self):

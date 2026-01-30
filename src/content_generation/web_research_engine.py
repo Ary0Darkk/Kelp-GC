@@ -46,15 +46,24 @@ class WebResearchEngine:
     
     Uses DuckDuckGo's HTML interface (no API key required) and extracts
     relevant statistics to enrich PPT content.
+    Now uses Janus Pro 7B for LLM synthesis instead of Ollama.
     """
     
-    def __init__(self, ollama_base_url: str = "http://localhost:11434"):
-        self.ollama_url = ollama_base_url
-        self.model = "qwen2.5:7b"
+    def __init__(self):
+        # Lazy-load Janus to avoid circular imports
+        self._janus_engine = None
         self.session = None
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         }
+    
+    @property
+    def janus_engine(self):
+        """Lazy load Janus engine"""
+        if self._janus_engine is None:
+            from src.vision.janus_engine import get_janus_engine
+            self._janus_engine = get_janus_engine()
+        return self._janus_engine
         
     async def _get_session(self):
         """Get or create aiohttp session"""
@@ -238,43 +247,30 @@ class WebResearchEngine:
         return benchmarks
     
     async def _summarize_with_llm(self, research_data: List[Dict], sector: str) -> str:
-        """Use LLM to summarize research findings into investor-ready insights"""
+        """Use Janus Pro 7B to summarize research findings into investor-ready insights"""
         combined_text = "\n".join([
             f"Source: {r['title']}\n{r['snippet']}" 
             for r in research_data[:6]
         ])
         
-        prompt = f"""You are an M&A analyst summarizing market research for an investment teaser.
-
-SECTOR: {sector}
-RESEARCH DATA:
-{combined_text}
-
-Extract and summarize the KEY STATISTICS and INSIGHTS for investors:
-1. Market size (with currency and year)
-2. Growth rate / CAGR
-3. Key industry trends
-4. Major growth drivers
-
-Format as a concise paragraph with specific numbers. Be factual, cite statistics.
-If data is unclear, state the range or general trend.
-
-SUMMARY (3-4 sentences with numbers):"""
-
+        # Use Janus synthesize_research method
         try:
-            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=60)) as session:
-                payload = {
-                    "model": self.model,
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {"temperature": 0.3, "num_predict": 500}
-                }
-                async with session.post(f"{self.ollama_url}/api/generate", json=payload) as resp:
-                    if resp.status == 200:
-                        data = await resp.json()
-                        return data.get("response", "").strip()
+            result = self.janus_engine.synthesize_research(combined_text, f"{sector} market research")
+            
+            # Format the result into a summary string
+            parts = []
+            if result.get('market_size'):
+                parts.append(f"Market size: {result['market_size']}")
+            if result.get('cagr'):
+                parts.append(f"CAGR: {result['cagr']}")
+            if result.get('key_trends'):
+                parts.append(f"Key trends: {', '.join(result['key_trends'][:2])}")
+            if result.get('growth_drivers'):
+                parts.append(f"Growth drivers: {', '.join(result['growth_drivers'][:2])}")
+            
+            return '. '.join(parts) if parts else ""
         except Exception as e:
-            print(f"  ⚠ LLM summarization error: {e}")
+            print(f"  ⚠ Janus LLM summarization error: {e}")
         
         return ""
     
@@ -337,13 +333,14 @@ SUMMARY (3-4 sentences with numbers):"""
 
 class EnhancedContentGenerator:
     """
-    Enhanced content generator that combines LLM with web research.
+    Enhanced content generator that combines Janus Pro 7B LLM with web research.
     """
     
-    def __init__(self, ollama_url: str = "http://localhost:11434"):
-        self.ollama_url = ollama_url
-        self.model = "qwen2.5:7b"
-        self.research_engine = WebResearchEngine(ollama_url)
+    def __init__(self):
+        # Use Janus engine for content generation
+        from src.vision.janus_engine import get_janus_engine
+        self._janus_engine = get_janus_engine()
+        self.research_engine = WebResearchEngine()
     
     async def generate_investor_content(self, raw_data: str, sector: str, 
                                         sub_sector: str = "") -> Dict[str, Any]:
@@ -407,29 +404,17 @@ IMPORTANT:
 OUTPUT (valid JSON only):"""
 
         try:
-            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=90)) as session:
-                payload = {
-                    "model": self.model,
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {
-                        "temperature": 0.7,
-                        "num_predict": 2000,
-                        "top_p": 0.9,
-                    }
-                }
-                async with session.post(f"{self.ollama_url}/api/generate", json=payload) as resp:
-                    if resp.status == 200:
-                        data = await resp.json()
-                        response = data.get("response", "")
-                        
-                        # Parse JSON from response
-                        json_match = re.search(r'\{.*\}', response, re.DOTALL)
-                        if json_match:
-                            return json.loads(json_match.group())
+            # Use Janus Pro 7B for content generation
+            response = self._janus_engine.generate_text(prompt, temperature=0.7, max_tokens=2000)
+            
+            if response:
+                # Parse JSON from response
+                json_match = re.search(r'\{.*\}', response, re.DOTALL)
+                if json_match:
+                    return json.loads(json_match.group())
                             
         except Exception as e:
-            print(f"  ⚠ Enhanced generation error: {e}")
+            print(f"  ⚠ Janus enhanced generation error: {e}")
         
         # Fallback
         return {
@@ -448,7 +433,7 @@ OUTPUT (valid JSON only):"""
 # Test function
 async def test_research():
     """Test the web research engine"""
-    engine = WebResearchEngine()
+    engine = WebResearchEngine()  # Now uses Janus Pro 7B
     
     print("\n🔍 Testing Web Research Engine\n")
     

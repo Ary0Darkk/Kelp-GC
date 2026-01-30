@@ -2,7 +2,8 @@
 Content Generation Module
 """
 from .llm_generator import (
-    OllamaInterface,
+    JanusLLMInterface,
+    OllamaInterface,  # Backward compatibility alias
     ContentAnonymizer,
     ContentGenerator,
     GeneratedContent,
@@ -10,9 +11,11 @@ from .llm_generator import (
 )
 
 __all__ = [
+    'JanusLLMInterface',
     'OllamaInterface',
     'ContentAnonymizer',
     'ContentGenerator',
     'GeneratedContent',
     'generate_all_content'
 ]
+

@@ -2,7 +2,7 @@
 Data Enrichment Engine - GPU-Accelerated Rich Content Extraction
 =================================================================
 
-This module uses the local LLM (via Ollama with GPU acceleration) to extract
+This module uses the local LLM (Janus Pro 7B with GPU acceleration) to extract
 ALL metrics, financial data, and sector-specific KPIs from source documents.
 
 It populates the PPT slides with REAL data like:
@@ -89,52 +89,42 @@ class ExtractedMetrics:
 
 class DataEnrichmentEngine:
     """
-    GPU-Accelerated Data Enrichment Engine using local LLM.
+    GPU-Accelerated Data Enrichment Engine using Janus Pro 7B.
     
     Extracts comprehensive metrics from company data for rich PPT generation.
     """
     
-    def __init__(self, ollama_base_url: str = "http://localhost:11434"):
-        self.base_url = ollama_base_url
-        self.model = "qwen2.5:7b"
+    def __init__(self):
+        # Lazy-load Janus to avoid circular imports
+        self._janus_engine = None
         self._available = None
+    
+    @property
+    def janus_engine(self):
+        """Lazy load Janus engine"""
+        if self._janus_engine is None:
+            from src.vision.janus_engine import get_janus_engine
+            self._janus_engine = get_janus_engine()
+        return self._janus_engine
         
     async def check_availability(self) -> bool:
-        """Check if Ollama is running and accessible"""
+        """Check if Janus Pro 7B is available"""
         if self._available is not None:
             return self._available
             
-        try:
-            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=5)) as session:
-                async with session.get(f"{self.base_url}/api/tags") as resp:
-                    self._available = resp.status == 200
-        except:
-            self._available = False
+        self._available = self.janus_engine.is_available()
         return self._available
     
     async def llm_extract(self, prompt: str, max_tokens: int = 1000) -> str:
-        """Use LLM to extract structured data"""
+        """Use Janus Pro 7B to extract structured data"""
         if not await self.check_availability():
             return ""
             
         try:
-            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=60)) as session:
-                payload = {
-                    "model": self.model,
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {
-                        "temperature": 0.1,  # Low temp for accurate extraction
-                        "num_predict": max_tokens,
-                        "num_gpu": 99,  # Use all available GPU layers
-                    }
-                }
-                async with session.post(f"{self.base_url}/api/generate", json=payload) as resp:
-                    if resp.status == 200:
-                        data = await resp.json()
-                        return data.get("response", "")
+            result = self.janus_engine.generate_text(prompt, temperature=0.1, max_tokens=max_tokens)
+            return result
         except Exception as e:
-            print(f"LLM extraction error: {e}")
+            print(f"Janus LLM extraction error: {e}")
         return ""
     
     def extract_financial_data(self, raw_content: str) -> Dict[str, Any]:

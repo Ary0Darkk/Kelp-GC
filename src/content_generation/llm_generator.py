@@ -1,6 +1,6 @@
 """
 Content Generation Module - LLM-powered content generation and anonymization
-Uses Ollama for local LLM inference
+Uses DeepSeek Janus Pro 7B for local GPU-accelerated inference
 """
 import re
 import json
@@ -11,7 +11,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from config.settings import LLM_CONFIG
+# Import Janus engine instead of Ollama
+from src.vision.janus_engine import get_janus_engine, JanusProEngine
 
 
 @dataclass
@@ -23,114 +24,70 @@ class GeneratedContent:
     citations: List[str]
 
 
-class OllamaInterface:
-    """Interface for Ollama LLM"""
+class JanusLLMInterface:
+    """
+    Interface for DeepSeek Janus Pro 7B LLM.
     
-    def __init__(self, model_name: str = None, base_url: str = None):
-        self.model_name = model_name or LLM_CONFIG.model_name
-        self.base_url = base_url or LLM_CONFIG.base_url
+    Drop-in replacement for OllamaInterface, using local GPU-accelerated
+    Janus model for all text generation tasks.
+    """
+    
+    def __init__(self):
+        self._engine = None
         self._available = None
+    
+    @property
+    def engine(self) -> JanusProEngine:
+        """Lazy load Janus engine"""
+        if self._engine is None:
+            self._engine = get_janus_engine()
+        return self._engine
         
     def is_available(self) -> bool:
-        """Check if Ollama is running and model is available"""
+        """Check if Janus Pro 7B is available"""
         if self._available is not None:
             return self._available
-            
-        try:
-            import requests
-            response = requests.get(f"{self.base_url}/api/tags", timeout=5)
-            if response.status_code == 200:
-                models = response.json().get('models', [])
-                model_names = [m.get('name', '').split(':')[0] for m in models]
-                self._available = any(self.model_name.split(':')[0] in name for name in model_names)
-            else:
-                self._available = False
-        except Exception:
-            self._available = False
-            
+        
+        self._available = self.engine.is_available()
         return self._available
     
     def generate(self, prompt: str, temperature: float = 0.5, max_tokens: int = 1024) -> str:
-        """Generate text using Ollama"""
-        try:
-            import requests
-            
-            response = requests.post(
-                f"{self.base_url}/api/generate",
-                json={
-                    "model": self.model_name,
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {
-                        "temperature": temperature,
-                        "num_predict": max_tokens
-                    }
-                },
-                timeout=LLM_CONFIG.timeout
-            )
-            
-            if response.status_code == 200:
-                return response.json().get('response', '')
-            else:
-                print(f"Ollama error: {response.status_code}")
-                return ""
-                
-        except Exception as e:
-            print(f"Ollama generation failed: {e}")
-            return ""
+        """Generate text using Janus Pro 7B"""
+        return self.engine.generate_text(prompt, temperature=temperature, max_tokens=max_tokens)
+    
+    def generate_narrative(self, context: str, sector: str, 
+                          narrative_type: str = "business_overview") -> str:
+        """Generate investment narrative content"""
+        return self.engine.generate_narrative(context, sector, narrative_type)
+    
+    def anonymize(self, text: str, company_name: str, sector: str) -> str:
+        """Anonymize text for blind teaser"""
+        return self.engine.anonymize_text(text, company_name, sector)
+    
+    def synthesize_research(self, web_content: str, query: str) -> Dict[str, Any]:
+        """Synthesize web research into structured insights"""
+        return self.engine.synthesize_research(web_content, query)
+
+
+# Backward compatibility alias
+OllamaInterface = JanusLLMInterface
 
 
 class ContentAnonymizer:
     """Anonymizes company content while preserving facts"""
     
-    def __init__(self, llm: Optional[OllamaInterface] = None):
-        self.llm = llm or OllamaInterface()
+    def __init__(self, llm: Optional[JanusLLMInterface] = None):
+        self.llm = llm or JanusLLMInterface()
         self.use_llm = self.llm.is_available()
         
         if not self.use_llm:
-            print("⚠ Ollama not available. Using rule-based anonymization.")
+            print("⚠ Janus Pro 7B not available. Using rule-based anonymization.")
     
     def anonymize_description(self, description: str, company_name: str, sector: str) -> str:
         """Anonymize company description"""
         if self.use_llm:
-            return self._llm_anonymize(description, company_name, sector)
+            return self.llm.anonymize(description, company_name, sector)
         return self._rule_based_anonymize(description, company_name, sector)
-    
-    def _llm_anonymize(self, description: str, company_name: str, sector: str) -> str:
-        """Use LLM for smart anonymization"""
-        prompt = f"""You are writing a "blind" investment teaser for M&A purposes. 
-Rewrite the following company description to ANONYMIZE the company identity while preserving all factual information.
-
-Rules:
-1. Remove all company names, founder names, and specific location names
-2. Replace with generic descriptions like "The Company", "A leading [sector] company"
-3. Keep all numbers, percentages, and metrics EXACTLY as stated
-4. Keep the professional, investment-ready tone
-5. Do not add any information not in the original
-6. Keep it concise (2-3 sentences max)
-
-Company Name to Remove: {company_name}
-Sector: {sector}
-
-Original Description:
-{description}
-
-Anonymized Description (2-3 sentences):"""
-
-        result = self.llm.generate(prompt, temperature=0.3, max_tokens=300)
-        
-        # Clean up result
-        result = result.strip()
-        if result.startswith('"'):
-            result = result[1:]
-        if result.endswith('"'):
-            result = result[:-1]
-            
-        # Fallback if LLM fails
-        if not result or len(result) < 50:
-            return self._rule_based_anonymize(description, company_name, sector)
-            
-        return result
     
     def _rule_based_anonymize(self, description: str, company_name: str, sector: str) -> str:
         """Rule-based anonymization fallback"""
@@ -182,10 +139,10 @@ Anonymized Description (2-3 sentences):"""
 
 
 class ContentGenerator:
-    """Generates polished content for slides"""
+    """Generates polished content for slides using Janus Pro 7B"""
     
-    def __init__(self, llm: Optional[OllamaInterface] = None):
-        self.llm = llm or OllamaInterface()
+    def __init__(self, llm: Optional[JanusLLMInterface] = None):
+        self.llm = llm or JanusLLMInterface()
         self.anonymizer = ContentAnonymizer(self.llm)
         self.use_llm = self.llm.is_available()
     
@@ -234,7 +191,7 @@ class ContentGenerator:
         return content
     
     def _enhance_highlights(self, highlights: List[str], sector: str) -> Optional[List[str]]:
-        """Use LLM to enhance investment highlights"""
+        """Use Janus LLM to enhance investment highlights"""
         prompt = f"""You are writing investment highlights for an M&A teaser in the {sector} sector.
 
 Given these draft highlights, rewrite them to be:
@@ -268,17 +225,12 @@ Rewrite as 4 polished bullet points (one per line, no bullet markers):"""
         if not self.use_llm:
             return f"A leading player in the {sector} sector with strong operational capabilities and growth potential."
         
-        prompt = f"""Write a 2-sentence executive summary for an investment teaser.
-
-Sector: {sector}
-Key Facts:
-- Industries: {', '.join(company_data.industries_served[:5]) if company_data.industries_served else 'Various'}
-- Products: {', '.join(company_data.products_services[:3]) if company_data.products_services else 'Multiple'}
-- Presence: {', '.join(company_data.global_presence) if company_data.global_presence else 'National'}
-
-Write an anonymous, compelling 2-sentence summary for investors:"""
-
-        result = self.llm.generate(prompt, temperature=0.5, max_tokens=150)
+        # Use Janus narrative generation
+        context = f"""Industries: {', '.join(company_data.industries_served[:5]) if company_data.industries_served else 'Various'}
+Products: {', '.join(company_data.products_services[:3]) if company_data.products_services else 'Multiple'}
+Presence: {', '.join(company_data.global_presence) if company_data.global_presence else 'National'}"""
+        
+        result = self.llm.generate_narrative(context, sector, "executive_summary")
         
         if result and len(result) > 50:
             return result.strip()
@@ -311,16 +263,17 @@ def generate_all_content(slide_content: Dict, company_data: Any, sector: str) ->
 
 
 if __name__ == "__main__":
-    # Test content generation
-    print("Testing Content Generation...\n")
+    # Test content generation with Janus
+    print("Testing Content Generation with Janus Pro 7B...")
+    print("=" * 50)
     
-    # Check Ollama availability
-    llm = OllamaInterface()
-    print(f"Ollama available: {llm.is_available()}")
+    # Check Janus availability
+    llm = JanusLLMInterface()
+    print(f"Janus Pro 7B available: {llm.is_available()}")
     
     if llm.is_available():
         # Test generation
-        result = llm.generate("Say 'Hello, I am working!' in exactly those words.", temperature=0.1)
+        result = llm.generate("Say 'Hello, I am Janus Pro 7B!' in exactly those words.", temperature=0.1)
         print(f"Test response: {result}")
     
     # Test anonymization
